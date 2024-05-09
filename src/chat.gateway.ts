@@ -12,7 +12,7 @@ import { Server, Socket } from 'socket.io';
 import { MessageDto } from './Message/Message.dto';
 @WebSocketGateway({
   cors: {
-    origin: ['http://localhost:3000'],
+    origin: '*',
     credentials: true,
   },
 })
@@ -22,9 +22,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private logger = new Logger('ChatGateway');
 
   @SubscribeMessage('message')
-  handleMessage(@MessageBody() message: string): void {
+  handleMessage(@MessageBody() message: MessageDto): MessageDto {
+    this.logger.log(`Message received: ${message.author} - ${message.body}`);
     this.server.emit('message', message);
-    //console.log(message);
+    return message;
   }
   handleConnection(socket: Socket) {
     this.logger.log(`Socket connected: ${socket.id}`);

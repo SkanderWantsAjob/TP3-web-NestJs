@@ -1,23 +1,90 @@
 <!doctype html>
 <html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .Messageright {
+        float: right;
+        clear: both;
+      }
+      /* Resetting default browser styles */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+      /* Basic styling for the chat container */
+      .chat {
+        width: 50%;
+        margin: 10px auto; /* Center the chat container */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9; /* Moved background color to the container */
+      }
 
-<body>
-  <div>
-    <ul id="messages"></ul>
-  </div>
+      #messages {
+        padding: 10px;
+        height: 300px;
+        overflow-y: scroll;
+        list-style-type: none; /* Move list style to here */
+        margin: 0;
+      }
 
-  <div>
-    <input id="message" type="text" />
-    <button onclick="handleSubmitNewMessage()">Submit</button>
-  </div>
+      /* Styling for individual chat messages */
+      .messageLeft {
+        padding: 10px;
+        margin: 5px 0; /* Adjusted margin */
+        border-radius: 5px;
+      }
 
-  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>  
-  <script src="./chat-socket.js"></script>
-</body>
+      button {
+        padding: 10px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px 5px; /* Adjusted margin */
+      }
 
+      button:hover {
+        background-color: #45a049;
+      }
+
+      /* Styling for the logout button */
+      #logout-btn {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #logout-btn:hover {
+        background-color: #d32f2f;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Chat application</h1>
+    <div>
+      <div class="chat">
+        <ul id="messages"></ul>
+      </div>
+
+      <div>
+        <input id="message" type="text" />
+        <button onclick="handleSubmitNewMessage()">Submit</button>
+        <button onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="./chat-socket.js"></script>
+  </body>
 </html>
