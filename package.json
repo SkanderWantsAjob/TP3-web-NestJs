@@ -28,8 +28,10 @@
     "@nestjs/mapped-types": "^2.0.5",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "",
+    "@nestjs/platform-socket.io": "^10.3.8",
     "@nestjs/serve-static": "^4.0.2",
     "@nestjs/typeorm": "^10.0.2",
+    "@nestjs/websockets": "^10.3.8",
     "@ngneat/falso": "",
     "@types/passport-jwt": "",
     "bcrypt": "",
@@ -43,8 +45,12 @@
     "postgres": "",
     "reflect-metadata": "",
     "rxjs": "",
+    "socket-io": "^1.0.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "typeorm": "^0.3.20",
-    "typeorm-extension": ""
+    "typeorm-extension": "",
+    "ws": "^8.17.0"
   },
   "devDependencies": {
     "@faker-js/faker": "",

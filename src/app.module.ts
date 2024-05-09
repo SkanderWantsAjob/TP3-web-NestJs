@@ -19,6 +19,7 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { CvHistoryModule } from './cvhistory/cvhistory.module';
 import { CvHistory } from './cvhistory/cvhistory.entity';
+import { ChatGateway } from './chat.gateway';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -41,7 +42,8 @@ import { CvHistory } from './cvhistory/cvhistory.entity';
     CvModule,
     AuthModule,
     CvHistoryModule,
-    EventEmitterModule.forRoot()
+    EventEmitterModule.forRoot(),
+    ChatGateway
   ],
 })
 export class AppModule {}

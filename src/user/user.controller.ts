@@ -19,13 +19,13 @@ import { JWTAuthGuard } from 'src/guards/auth.guard';
 export class UserController {
   constructor(private userService: UserService) {}
   @Post()
-  @UseGuards(JWTAuthGuard)
+  //@UseGuards(JWTAuthGuard)
   @UsePipes(ValidationPipe)
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.create(createUserDto);
   }
   @Get('')
-  @UseGuards(AdminGuard)
+  //@UseGuards(AdminGuard)
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
   }
@@ -35,7 +35,7 @@ export class UserController {
     return await this.userService.findById(+id);
   }
   @Delete('/:id')
-  @UseGuards(JWTAuthGuard)
+  //@UseGuards(JWTAuthGuard)
   async remove(@Param('id') id: string): Promise<User> {
     return await this.userService.remove(+id);
   }
