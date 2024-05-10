@@ -32,7 +32,7 @@ export class CvService {
     this.eventEmitter.emit('cv.added', eventData);
     this.eventEmitter.emit('persistence', {
       cv: createdCV,
-      user: createdCV.user,
+      user:  await this.userService.findById(+createdCV.user),
       action: ActionEnum.CREATE,
     } as eventType);
     
@@ -88,7 +88,7 @@ export class CvService {
       this.eventEmitter.emit('cv.updated', eventData);
       this.eventEmitter.emit('persistence', {
         cv: cv,
-        user: cv.user,
+        user: await this.userService.findById(+cv.user),
         action: ActionEnum.UPDATE,
       } as eventType);
       return this.cvrespository.save(cv);

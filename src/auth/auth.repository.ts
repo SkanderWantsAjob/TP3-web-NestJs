@@ -14,8 +14,9 @@ export class AuthRepository extends Repository<Users> {
   }
   async SignUp(signUpDto: SignUpDto) {
     const user = new Users();
-    const { username, role, email, password } = signUpDto;
-    user.email = email;
+    const { id,username, role, email, password } = signUpDto;
+    user.id=id;
+     user.email = email;
     user.password = password;
     user.username = username;
     user.role = role;
@@ -28,7 +29,7 @@ export class AuthRepository extends Repository<Users> {
     const { username, password } = signInDto;
     const user = await this.findOne({ where: { username: username } });
     if (user && (await user.validatePassword(password))) {
-      return { id: user.id, username: user.username, role: user.role };
+      return {id:user.id, username: user.username, role: user.role };
     } else {
       return null;
     }

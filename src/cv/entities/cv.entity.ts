@@ -10,6 +10,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Users } from 'src/auth/auth.entity';
 
 @Entity()
 export class Cv extends BaseEntity {

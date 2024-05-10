@@ -5,9 +5,16 @@ import {
   MaxLength,
   Matches,
   IsIn,
+  IsNumber,
+  IsNotEmpty,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class SignUpDto {
+  @Type((convertiVers) => Number)
+  @IsNumber()
+  @IsNotEmpty()
+  id:number;
   @IsString()
   @MinLength(4)
   @MaxLength(20)
@@ -24,3 +31,5 @@ export class SignUpDto {
   @IsString()
   role: string;
 }
+
+

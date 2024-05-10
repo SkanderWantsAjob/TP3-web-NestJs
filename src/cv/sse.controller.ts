@@ -14,7 +14,7 @@ export class MySseController {
   sse(@GetUser() user: JwtPayload): Observable<MessageEvent> {
     return fromEvent(this.eventEmitter, 'persistence').pipe(
       filter((payload: eventType) => {
-        console.log('id=',payload.user.id);
+        console.log('id=',payload.user);
         console.log(user);
         
         return payload.user.id === user.id || user.role === 'admin';

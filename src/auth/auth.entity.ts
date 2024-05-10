@@ -9,7 +9,8 @@ import {
 import * as bcrypt from 'bcrypt';
 @Entity()
 export class Users extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  //@PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column({ unique: true })
