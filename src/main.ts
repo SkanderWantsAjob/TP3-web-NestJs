@@ -13,7 +13,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true })); // Add ValidationPipe to the global scope
   app.enableVersioning();
-  app.use(cookieParser());
   await app.listen(3000);
   /*  
   const app = await NestFactory.createApplicationContext(AppModule);
