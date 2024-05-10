@@ -18,7 +18,7 @@ export class CvService {
     private eventEmitter: EventEmitter2,
   ) {}
 
-  async create(createCvDto: CreateCvDto,Sender:Users): Promise<Cv> {
+  async create(createCvDto: CreateCvDto): Promise<Cv> {
     const createdCV = await this.cvrespository.createCv(createCvDto);
     const eventData = {
       cv: createdCV,
@@ -31,10 +31,9 @@ export class CvService {
     this.eventEmitter.emit('persistence', {
       cv: createdCV,
       user: createdCV.user,
-      sender: Sender,
       action: ActionEnum.CREATE,
     } as eventType);
-    
+
     return createdCV;
   }
 

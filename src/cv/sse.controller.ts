@@ -1,18 +1,23 @@
 import { Controller, Sse, UseGuards } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Observable, fromEvent } from 'rxjs';
-import { map,filter } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
+import { GetUser } from 'src/auth/decorator';
+import { JwtPayload } from 'src/auth/jwt-payload.interface';
 import { eventType } from 'src/common/event.type';
+import { JWTAuthGuard } from 'src/guards/auth.guard';
 @Controller('api')
 export class MySseController {
   constructor(private eventEmitter: EventEmitter2) {}
   @Sse('sse')
-  sse(): Observable<MessageEvent> {
+  @UseGuards(JWTAuthGuard)
+  sse(@GetUser() user: JwtPayload): Observable<MessageEvent> {
     return fromEvent(this.eventEmitter, 'persistence').pipe(
       filter((payload: eventType) => {
-        console.log(payload.user.id);console.log(payload.sender);
-        
-        return payload.user.id === payload.sender.id|| payload.sender.role === 'admin';
+        console.log(payload.user.id);
+        console.log(user);
+
+        return payload.user.id === user.id || user.role === 'admin';
       }),
       map((payload: eventType) => {
         console.log('persistence event');
@@ -22,6 +27,3 @@ export class MySseController {
     );
   }
 }
-
-
-

@@ -35,6 +35,6 @@ export class Cv extends BaseEntity {
   @ManyToOne(() => User, (user) => user.cvs, { eager: true })
   user: User;
 
-  @OneToMany(() => CvHistory, (cvHistory) => cvHistory.cv ,{cascade :true})
+  @OneToMany(() => CvHistory, (cvHistory) => cvHistory.cv, { cascade: true })
   histories: CvHistory[];
 }

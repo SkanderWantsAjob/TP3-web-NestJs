@@ -46,11 +46,8 @@ export class CvControllerV2 {
 
   @Post()
   @UseGuards(JWTAuthGuard)
-  async create(
-    @Body() createCvDto: CreateCvDto,
-    @GetUser() user: Users,
-  ): Promise<Cv> {
-    return await this.cvService.create(createCvDto, user);
+  async create(@Body() createCvDto: CreateCvDto): Promise<Cv> {
+    return await this.cvService.create(createCvDto);
   }
 
   // @Get('token')

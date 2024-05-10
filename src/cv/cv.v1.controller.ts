@@ -45,7 +45,7 @@ export class CvControllerV1 {
   async create(@Body() createCvDto: CreateCvDto): Promise<Cv> {
     return await this.cvService.create(createCvDto);
   }*/
-  
+
   /*
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', multerConfig))

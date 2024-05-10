@@ -1,5 +1,16 @@
 <script type="text/javascript">
- const eventSource = new EventSource('http://localhost:3000/api/sse', { withCredentials: true });
+  const jwt = 'your_jwt_token_here';  // Assume you fetch or have it stored
+  
+  const url = 'http://localhost:3000/api/sse';
+
+  const eventSourceInitDict = {
+    headers: {
+      'Authorization': `Bearer ${jwt}`,
+    },
+    withCredentials: true,
+  };
+
+  const eventSource = new EventSource(url, eventSourceInitDict);
   eventSource.onmessage = (payload) => {
     const message = document.createElement('div');
     const data = JSON.parse(payload.data);

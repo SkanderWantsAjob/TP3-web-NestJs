@@ -3,7 +3,8 @@ import {
   Post,
   Body,
   ValidationPipe,
-  UseGuards,Res,
+  UseGuards,
+  Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signUpDto';
@@ -22,10 +23,10 @@ export class AuthController {
     return this.authService.signUp(signUpDto);
   }
   @Post('/signin')
-   signIn(
+  signIn(
     @Body(ValidationPipe) signInDto: SignInDto,
-  ): Promise<{ accessToken: string }>{
-    return this.authService.signIn(signInDto)
+  ): Promise<{ accessToken: string }> {
+    return this.authService.signIn(signInDto);
   }
   @Post('/authorized')
   @UseGuards(JWTAuthGuard)
@@ -33,4 +34,3 @@ export class AuthController {
     return user;
   }
 }
-

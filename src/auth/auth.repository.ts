@@ -24,13 +24,11 @@ export class AuthRepository extends Repository<Users> {
 
     await user.save();
   }
-  async validateUserPassword(
-    signInDto: SignInDto,
-  ): Promise<JwtPayload> {
+  async validateUserPassword(signInDto: SignInDto): Promise<JwtPayload> {
     const { username, password } = signInDto;
     const user = await this.findOne({ where: { username: username } });
     if (user && (await user.validatePassword(password))) {
-      return {id:user.id, username: user.username, role: user.role };
+      return { id: user.id, username: user.username, role: user.role };
     } else {
       return null;
     }

@@ -10,7 +10,10 @@ export class CvHistory {
   @Column()
   type: string;
 
-  @ManyToOne(() => User, (user) => user.cvHistories, { eager: true ,cascade :true}) // Define many-to-one relationship
+  @ManyToOne(() => User, (user) => user.cvHistories, {
+    eager: true,
+    cascade: true,
+  }) // Define many-to-one relationship
   actionBy: User;
 
   @ManyToOne(() => Cv, (cv) => cv.histories, { eager: true })
