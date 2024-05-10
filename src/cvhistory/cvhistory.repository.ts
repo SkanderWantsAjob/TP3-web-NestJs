@@ -12,5 +12,4 @@ export class CvHistoryRepository extends Repository<CvHistory> {
   async findAll(): Promise<CvHistory[]> {
     return await this.find();
   }
-
 }

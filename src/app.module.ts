@@ -41,7 +41,7 @@ import { CvHistory } from './cvhistory/cvhistory.entity';
     CvModule,
     AuthModule,
     CvHistoryModule,
-    EventEmitterModule.forRoot()
+    EventEmitterModule.forRoot(),
   ],
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import { SignUpDto } from './dto/signUpDto';
 import { SignInDto } from './dto/signIn.Dto';
 import { JwtPayload } from './jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -23,9 +24,9 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload: JwtPayload = { username: obj.username, role: obj.role };
+    const payload: JwtPayload = { id:obj.id ,username: obj.username, role: obj.role };
     const accessToken = await this.jwtService.sign(payload);
-
+   
     return { accessToken };
   }
 }

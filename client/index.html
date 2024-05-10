@@ -1,0 +1,10 @@
+<script type="text/javascript">
+ const eventSource = new EventSource('http://localhost:3000/api/sse', { withCredentials: true });
+  eventSource.onmessage = (payload) => {
+    const message = document.createElement('div');
+    const data = JSON.parse(payload.data);
+    console.log(data);
+    message.textContent = JSON.stringify(data); // Set the content of the message
+    document.body.appendChild(message);
+  };
+</script>

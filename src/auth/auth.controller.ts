@@ -3,7 +3,7 @@ import {
   Post,
   Body,
   ValidationPipe,
-  UseGuards,
+  UseGuards,Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signUpDto';
@@ -12,7 +12,7 @@ import { AdminGuard } from 'src/guards/admin.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { JWTAuthGuard } from 'src/guards/auth.guard';
 import { GetUser } from './decorator';
-
+import { Response } from 'express';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -22,15 +22,10 @@ export class AuthController {
     return this.authService.signUp(signUpDto);
   }
   @Post('/signin')
-  signIn(
+   signIn(
     @Body(ValidationPipe) signInDto: SignInDto,
-  ): Promise<{ accessToken: string }> {
-    return this.authService.signIn(signInDto);
-  }
-  @Post('/admin')
-  @UseGuards(AdminGuard)
-  Test() {
-    return 'Welcome Admin';
+  ): Promise<{ accessToken: string }>{
+    return this.authService.signIn(signInDto)
   }
   @Post('/authorized')
   @UseGuards(JWTAuthGuard)
@@ -38,3 +33,4 @@ export class AuthController {
     return user;
   }
 }
+

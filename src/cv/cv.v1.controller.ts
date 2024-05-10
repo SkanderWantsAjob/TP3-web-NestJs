@@ -40,11 +40,13 @@ export class CvControllerV1 {
     private readonly cvService: CvService,
     private readonly fileUploadService: FileUploadService,
   ) {}
-
+  /*
   @Post()
   async create(@Body() createCvDto: CreateCvDto): Promise<Cv> {
     return await this.cvService.create(createCvDto);
-  }
+  }*/
+  
+  /*
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', multerConfig))
   async uploadFile(
@@ -58,7 +60,7 @@ export class CvControllerV1 {
   ) {
     return await this.fileUploadService.uploadFile(file);
     //return file;
-  }
+  }*/
 
   @Get('')
   async findAll(@Query(ValidationPipe) filter: GetCvFilterDto): Promise<Cv[]> {

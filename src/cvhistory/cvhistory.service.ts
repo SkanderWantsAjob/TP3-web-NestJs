@@ -5,12 +5,11 @@ import { CvHistory } from './cvhistory.entity';
 import { NotFoundException } from '@nestjs/common';
 import { CvHistoryRepository } from './cvhistory.repository';
 
-
 @Injectable()
-export class CvHistoryService { 
+export class CvHistoryService {
   constructor(
     @InjectRepository(CvHistoryRepository)
-    private cvHistoryRepository: CvHistoryRepository
+    private cvHistoryRepository: CvHistoryRepository,
   ) {}
 
   async recordEvent(data: any): Promise<CvHistory[]> {
@@ -20,7 +19,5 @@ export class CvHistoryService {
   async findAll(): Promise<CvHistory[]> {
     return await this.cvHistoryRepository.find();
   }
-
- 
 }
-export default CvHistoryService
+export default CvHistoryService;

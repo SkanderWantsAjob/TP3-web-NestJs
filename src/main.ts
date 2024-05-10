@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common'; // Import ValidationPipe
 // import { CvService } from './cv/cv.service';
 // import { UpdateCvDto } from './cv/dto/update-cv.dto';
 // import { SkillService } from './skill/skill.service';
@@ -9,7 +11,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true })); // Add ValidationPipe to the global scope
   app.enableVersioning();
+  app.use(cookieParser());
   await app.listen(3000);
   /*  
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -72,3 +76,5 @@ async function bootstrap() {
   */
 }
 bootstrap();
+
+

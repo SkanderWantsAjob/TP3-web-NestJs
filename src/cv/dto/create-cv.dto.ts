@@ -1,4 +1,5 @@
-import { IsNotEmpty } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 import { Skill } from 'src/skill/entities/skill.entity';
 import { User } from 'src/user/entities/user.entity';
 
@@ -9,10 +10,10 @@ export class CreateCvDto {
   @IsNotEmpty()
   firstname: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   age: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   cin: number;
 
   @IsNotEmpty()

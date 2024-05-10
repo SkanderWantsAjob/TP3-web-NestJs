@@ -6,7 +6,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CvRepository } from './cv.repository';
 import { Cv } from './entities/cv.entity';
 import { GetCvFilterDto } from './dto/get-cv-filter.dto';
-import { UserService } from 'src/user/user.service';
+import { ActionEnum } from '../common/action.enum';
+import { eventType } from 'src/common/event.type';
+import { Users } from 'src/auth/auth.entity';
 
 @Injectable()
 export class CvService {
@@ -14,27 +16,27 @@ export class CvService {
     @InjectRepository(CvRepository)
     private cvrespository: CvRepository,
     private eventEmitter: EventEmitter2,
-    private userService : UserService,
   ) {}
 
-  async create(createCvDto: CreateCvDto): Promise<Cv> {
+  async create(createCvDto: CreateCvDto,Sender:Users): Promise<Cv> {
     const createdCV = await this.cvrespository.createCv(createCvDto);
-   
-   
-    console.log({createdCV})
     const eventData = {
-      cv: createdCV, 
+      cv: createdCV,
       name: createCvDto.name,
       actionBy: createdCV.user,
       date: new Date(),
-      userid: await this.userService.findById(+createdCV.user),
+      /*userid: await this.userService.findById(+createdCV.user),*/
     };
-    console.log(eventData)
-    const X= this.eventEmitter.emit('cv.added', eventData); 
-    console.log(X);
+    this.eventEmitter.emit('cv.added', eventData);
+    this.eventEmitter.emit('persistence', {
+      cv: createdCV,
+      user: createdCV.user,
+      sender: Sender,
+      action: ActionEnum.CREATE,
+    } as eventType);
+    
     return createdCV;
   }
-  
 
   async findAll(filter: GetCvFilterDto): Promise<Cv[]> {
     return await this.cvrespository.getCvs(filter);
@@ -52,37 +54,45 @@ export class CvService {
     const found = await this.findById(id);
     if (found) {
       const eventData = {
-        cv: found, 
+        cv: found,
         name: found.name,
         actionBy: found.user,
         date: new Date(),
         userid: found.user,
       };
       this.eventEmitter.emit('cv.deleted', eventData);
+      this.eventEmitter.emit('persistence', {
+        cv: found,
+        user: found.user,
+        action: ActionEnum.DELETE,
+      } as eventType);
+
       this.cvrespository.remove(found);
       return found;
-    }
-    else {
-      throw new NotFoundException;
+    } else {
+      throw new NotFoundException();
     }
   }
   async update(id: number, updateCvDto: UpdateCvDto): Promise<Cv> {
-    
     const cv = await this.findById(id);
-    if (cv){
-    Object.assign(cv, updateCvDto);
-    const eventData = {
-      cv: cv, 
-      name: cv.name,
-      actionBy: cv.user,
-      date: new Date(),
-      userid: cv.user,
-    };
-    console.log(this.eventEmitter.emit('cv.updated', eventData));
-    console.log("emitted")
-    return this.cvrespository.save(cv);
-  }
-  else { throw new NotFoundException; }
-
+    if (cv) {
+      Object.assign(cv, updateCvDto);
+      const eventData = {
+        cv: cv,
+        name: cv.name,
+        actionBy: cv.user,
+        date: new Date(),
+        userid: cv.user,
+      };
+      this.eventEmitter.emit('cv.updated', eventData);
+      this.eventEmitter.emit('persistence', {
+        cv: cv,
+        user: cv.user,
+        action: ActionEnum.UPDATE,
+      } as eventType);
+      return this.cvrespository.save(cv);
+    } else {
+      throw new NotFoundException();
+    }
   }
 }

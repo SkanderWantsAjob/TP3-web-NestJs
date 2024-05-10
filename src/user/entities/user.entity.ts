@@ -26,5 +26,5 @@ export class User extends BaseEntity {
   cvs: Cv[];
 
   @OneToMany(() => CvHistory, (cvh) => cvh.actionBy)
-  cvHistories : CvHistory[]
+  cvHistories: CvHistory[];
 }

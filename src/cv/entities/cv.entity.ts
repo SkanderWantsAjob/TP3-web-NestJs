@@ -20,9 +20,9 @@ export class Cv extends BaseEntity {
   name: string;
   @Column()
   firstname: string;
-  @Column()
+  @Column({ nullable: true })
   age: number;
-  @Column()
+  @Column({ nullable: true })
   cin: number;
   @Column()
   job: string;
@@ -35,6 +35,6 @@ export class Cv extends BaseEntity {
   @ManyToOne(() => User, (user) => user.cvs, { eager: true })
   user: User;
 
-  @OneToMany(() => CvHistory, cvHistory => cvHistory.cv)
+  @OneToMany(() => CvHistory, (cvHistory) => cvHistory.cv ,{cascade :true})
   histories: CvHistory[];
 }

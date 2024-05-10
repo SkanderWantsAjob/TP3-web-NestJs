@@ -5,6 +5,7 @@ import { SignUpDto } from './dto/signUpDto';
 import * as bcrypt from 'bcrypt';
 import { sign } from 'crypto';
 import { SignInDto } from './dto/signIn.Dto';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthRepository extends Repository<Users> {
@@ -25,11 +26,11 @@ export class AuthRepository extends Repository<Users> {
   }
   async validateUserPassword(
     signInDto: SignInDto,
-  ): Promise<{ username: string; role: string }> {
+  ): Promise<JwtPayload> {
     const { username, password } = signInDto;
     const user = await this.findOne({ where: { username: username } });
     if (user && (await user.validatePassword(password))) {
-      return { username: user.username, role: user.role };
+      return {id:user.id, username: user.username, role: user.role };
     } else {
       return null;
     }

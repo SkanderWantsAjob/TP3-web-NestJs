@@ -31,6 +31,8 @@ import { FileUploadService } from 'src/common/file-upload.service';
 import { Express } from 'express';
 import { JWTAuthGuard } from 'src/guards/auth.guard';
 import { GetUser } from 'src/auth/decorator';
+import { User } from 'src/user/entities/user.entity';
+import { Users } from 'src/auth/auth.entity';
 
 @Controller({
   path: 'cv',
@@ -44,8 +46,11 @@ export class CvControllerV2 {
 
   @Post()
   @UseGuards(JWTAuthGuard)
-  async create(@Body() createCvDto: CreateCvDto): Promise<Cv> { 
-    return await this.cvService.create(createCvDto);
+  async create(
+    @Body() createCvDto: CreateCvDto,
+    @GetUser() user: Users,
+  ): Promise<Cv> {
+    return await this.cvService.create(createCvDto, user);
   }
 
   // @Get('token')
@@ -89,6 +94,7 @@ export class CvControllerV2 {
   async remove(@Param('id') id: string): Promise<Cv> {
     return await this.cvService.remove(+id);
   }
+  /*
   @Post('upload')
   @UseGuards(JWTAuthGuard)
   @UseInterceptors(FileInterceptor('file', multerConfig))
@@ -103,5 +109,5 @@ export class CvControllerV2 {
   ) {
     return await this.fileUploadService.uploadFile(file);
     //return file;
-  }
+  }*/
 }
