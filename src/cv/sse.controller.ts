@@ -5,18 +5,18 @@ import { map, filter } from 'rxjs/operators';
 import { GetUser } from 'src/auth/decorator';
 import { JwtPayload } from 'src/auth/jwt-payload.interface';
 import { eventType } from 'src/common/event.type';
-import { JWTAuthGuard } from 'src/guards/auth.guard';
+import { JWTAuthGuard2 } from 'src/guards/authurl.guard';
 @Controller('api')
 export class MySseController {
   constructor(private eventEmitter: EventEmitter2) {}
   @Sse('sse')
-  @UseGuards(JWTAuthGuard)
+  @UseGuards(JWTAuthGuard2)
   sse(@GetUser() user: JwtPayload): Observable<MessageEvent> {
     return fromEvent(this.eventEmitter, 'persistence').pipe(
       filter((payload: eventType) => {
-        console.log(payload.user.id);
+        console.log('id=',payload.user.id);
         console.log(user);
-
+        
         return payload.user.id === user.id || user.role === 'admin';
       }),
       map((payload: eventType) => {

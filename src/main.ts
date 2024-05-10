@@ -13,6 +13,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true })); // Add ValidationPipe to the global scope
   app.enableVersioning();
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Authorization', 'Content-Type']
+  });
   await app.listen(3000);
   /*  
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -75,3 +79,5 @@ async function bootstrap() {
   */
 }
 bootstrap();
+
+

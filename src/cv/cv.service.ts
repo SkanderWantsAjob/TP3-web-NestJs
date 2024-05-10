@@ -9,6 +9,7 @@ import { GetCvFilterDto } from './dto/get-cv-filter.dto';
 import { ActionEnum } from '../common/action.enum';
 import { eventType } from 'src/common/event.type';
 import { Users } from 'src/auth/auth.entity';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class CvService {
@@ -16,6 +17,7 @@ export class CvService {
     @InjectRepository(CvRepository)
     private cvrespository: CvRepository,
     private eventEmitter: EventEmitter2,
+    private userService: UserService,
   ) {}
 
   async create(createCvDto: CreateCvDto): Promise<Cv> {
@@ -25,7 +27,7 @@ export class CvService {
       name: createCvDto.name,
       actionBy: createdCV.user,
       date: new Date(),
-      /*userid: await this.userService.findById(+createdCV.user),*/
+      userid: await this.userService.findById(+createdCV.user),
     };
     this.eventEmitter.emit('cv.added', eventData);
     this.eventEmitter.emit('persistence', {
@@ -33,7 +35,7 @@ export class CvService {
       user: createdCV.user,
       action: ActionEnum.CREATE,
     } as eventType);
-
+    
     return createdCV;
   }
 
