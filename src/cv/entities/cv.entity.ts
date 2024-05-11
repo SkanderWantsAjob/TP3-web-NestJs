@@ -5,9 +5,11 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Users } from 'src/auth/auth.entity';
@@ -35,7 +37,10 @@ export class Cv extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.cvs, { eager: true })
   user: User;
+  
 
-  @OneToMany(() => CvHistory, (cvHistory) => cvHistory.cv, { cascade: true })
-  histories: CvHistory[];
+  @OneToOne(() => CvHistory, (cvHistory) => cvHistory.cv)
+  @JoinColumn()
+  histories: CvHistory;
+  
 }

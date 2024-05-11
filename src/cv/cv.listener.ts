@@ -37,6 +37,7 @@ export class CvListener {
   @OnEvent('cv.deleted')
   async handleCvDeleted(eventData: any) {
     console.log('cvlistener3');
+    console.log(eventData);
     await this.cvHistoryService.recordEvent({
       cv: eventData.cv,
       type: 'delete',
@@ -44,6 +45,7 @@ export class CvListener {
       date: eventData.date,
       actionBy: eventData.actionBy,
     });
+
   }
 }
 export default CvListener;
