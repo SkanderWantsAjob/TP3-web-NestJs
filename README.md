@@ -1,6 +1,7 @@
 ## Description
 
-This is Web Protocols Course Lab 1 in INSAT Tunis.
+This is Web Protocols Course Lab 3 in INSAT Tunis.
+there are 3 branches: persistance, SSE, Websocket
 
 This Lab is about Resume Manager built with Nest.js.
 
